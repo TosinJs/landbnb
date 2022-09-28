@@ -11,7 +11,11 @@ export class ListingsController {
 
   @Post()
   create(@Body() createListingDto: CreateListingDto) {
-    return this.listingsService.create(createListingDto);
+    try {
+      return this.listingsService.create(createListingDto);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   @Get()

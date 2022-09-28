@@ -8,8 +8,8 @@ export class UsersService {
   constructor(private prisma: PrismaService){}
 
   async create(createUserDto: CreateUserDto) {
-    const { username, email } = createUserDto
-    const user = { username, email }
+    const { username, email, age, country, personalDesc, profilePicture } = createUserDto
+    const user = { username, email, age, country, personalDesc, profilePicture }
     // try {
     //   const response = await fetch("localhost:3000", {
     //     method: "POST",

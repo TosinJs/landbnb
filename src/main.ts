@@ -10,7 +10,7 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: true,
   }))
-
+  app.enableCors()
   app.useGlobalFilters(new AllExceptionsFilter())
   await app.listen(8080);
 }

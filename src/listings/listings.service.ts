@@ -13,7 +13,13 @@ export class ListingsService {
     const listing = {
       ownerId: createListingDto.ownerId,
       cost: createListingDto.cost,
-      location: createListingDto.location
+      title: createListingDto.title,
+      description: createListingDto.description,
+      maxGuests: createListingDto.maxGuests,
+      numOfBeds: createListingDto.numOfBeds,
+      country: createListingDto.country,
+      City: createListingDto.city,
+      images: createListingDto.images,
     }
     return this.prisma.listing.create({
       data: listing

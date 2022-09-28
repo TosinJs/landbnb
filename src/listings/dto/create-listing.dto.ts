@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber } from "class-validator"
+import { Type } from "class-transformer";
+import { IsArray, IsNotEmpty, IsNumber, IsString, IsUrl } from "class-validator"
 
 export class CreateListingDto {
 
@@ -7,10 +8,37 @@ export class CreateListingDto {
     ownerId: number;
 
     @IsNotEmpty()
+    @Type(() => Number)
     @IsNumber()
     cost: number;
 
     @IsNotEmpty()
+    @IsString()
+    title: string;
+
+    @IsNotEmpty()
+    @IsString()
+    description: string;
+
+    @IsNotEmpty()
+    @Type(() => Number)
     @IsNumber()
-    location: string;
+    maxGuests: number;
+
+    @IsNotEmpty()
+    @Type(() => Number)
+    @IsNumber()
+    numOfBeds: number;
+
+    @IsNotEmpty()
+    @IsString()
+    country: string;
+
+    @IsNotEmpty()
+    @IsString()
+    city: string;
+
+    @IsNotEmpty()
+    @IsArray()
+    images: string[];
 }
