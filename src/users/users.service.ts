@@ -1,14 +1,22 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Request } from 'express';
+import axios from 'axios';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { HttpService } from '@nestjs/axios';
+import { catchError, map } from 'rxjs';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService){}
+  constructor(
+    private prisma: PrismaService,
+    private readonly httpService: HttpService,
+    ){}
 
   async create(createUserDto: CreateUserDto) {
-    const { username, email, age, country, personalDesc, profilePicture } = createUserDto
+    let { username, email, age, country, personalDesc, profilePicture } = createUserDto
+    age = Number(age)
     const user = { username, email, age, country, personalDesc, profilePicture }
     // try {
     //   const response = await fetch("localhost:3000", {
@@ -39,10 +47,10 @@ export class UsersService {
     return users
   }
 
-  async findOne(id: number) {
+  async findOne(username: string) {
     const user = await this.prisma.user.findUnique({
       where: {
-        id: id
+        username: username
       }
     })
     if (!user) {
@@ -66,5 +74,25 @@ export class UsersService {
         id: id
       }
     })
+  }
+
+  async refresh(req: Request) {
+    try {
+      let tokenString = req.headers.authorization
+      if (!tokenString) {
+          throw new HttpException("No ID Token", HttpStatus.UNAUTHORIZED)
+      }
+      const tokenArray = tokenString.split(" ")
+      return this.httpService
+        .post("http://localhost:3000/users/refresh",{
+            refreshToken: tokenArray[1],
+          })
+        .pipe(map(res => res.data))
+        .pipe(catchError(() => {
+          throw new HttpException("Invalid User Credentials", HttpStatus.UNAUTHORIZED)
+        }))
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.UNAUTHORIZED)
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { IsNotEmpty, Length, IsEmail, IsNumber, IsPositive, IsString } from "class-validator"
+import { IsNotEmpty, Length, IsEmail, IsNumber, IsString } from "class-validator"
 
 export class CreateUserDto {
 
@@ -13,21 +13,21 @@ export class CreateUserDto {
     email: string;
 
     @IsNotEmpty()
-    @IsPositive()
-    age;
+    @IsNumber()
+    age: number;
 
     @IsNotEmpty()
     @Length(3, 100, {
         message: "The shortest country name is four characters long"
     })
     @IsString()
-    country; 
+    country: string; 
 
     @IsNotEmpty()
     @IsString()
-    personalDesc;
+    personalDesc: string;
     
     @IsNotEmpty()
     @IsString()
-    profilePicture
+    profilePicture: string;
 }
