@@ -24,7 +24,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This Project contains the API service for LandBnB, a knock off AirBnB. Images of the frontend application (pardon the shabby work) can be found below. This service is built in NestJs and is built as an independent service. The User Authentication is handled by another service I built Authman (knock off Auth0).
+
+This Service uses a PostGreSql database and Prisma as the ORM. The Postman documenation of this service can also be found in this repo.
 
 ## Installation
 
